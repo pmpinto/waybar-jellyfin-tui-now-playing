@@ -17,7 +17,7 @@ A simple waybar custom module for displaying currently playing media from jellyf
   chmod +x waybar-now-playing
   ```
 4. Add to your waybar config:
-  ```
+  ```jsonc
   "custom/now-playing": {
     "exec": "waybar-now-playing",
     "interval": 2,
@@ -37,7 +37,7 @@ The script is currently hardcoded to use `jellyfin-tui`. To use a different play
 
 ### Option 1: Change the player in the script
 Edit the script and replace `jellyfin-tui` with your player name, for instance, `spotify`:
-```
+```bash
 status=$(playerctl -p spotify status 2>/dev/null)
 artist=$(playerctl -p spotify metadata --format '{{xesam:artist}}')
 title=$(playerctl -p spotify metadata --format '{{xesam:title}}')
@@ -48,7 +48,7 @@ You can list all your players with `playerctl -l`.
 
 ### Option 2: Use the default player (no specific player)
 Remove the `-p player-name` flag entirely to use whatever player is currently active:
-```
+```bash
 status=$(playerctl status 2>/dev/null)
 artist=$(playerctl metadata --format '{{xesam:artist}}')
 title=$(playerctl metadata --format '{{xesam:title}}')
@@ -57,8 +57,8 @@ album=$(playerctl metadata --format '{{xesam:album}}')
 
 ## Customization
 ### Changing the icon
-The script uses the "music note" icon ( ). This appears in your waybar, next to the currently playing artist. To change it, edit the last line:
-```
+The script uses the "music note" icon. This appears in your waybar, next to the currently playing artist. To change it, edit the last line:
+```bash
 printf '{"text":"  %s","tooltip":"%s"}\n' "$artist" "$tooltip"
 ```
 
@@ -66,6 +66,6 @@ Refer to https://www.nerdfonts.com/cheat-sheet for other possible icons.
 
 ### Changing tooltip opacity
 The tooltip uses alpha values (72% and 96%) to style secondary vs primary text. This makes it naturally adapt to other color schemes you may be using. Adjust these values as needed in the `tooltip` line:
-```
+```bash
 tooltip="<span alpha='72%'>󰠃 Artist</span>   <span alpha='96%'>${artist}</span>\n<span alpha='72%'>󰀥 Album</span>    <span alpha='96%'>${album}</span>\n<span alpha='72%'> Song</span>     <span alpha='96%'>${title}</span>"
 ```
